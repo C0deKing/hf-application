@@ -89,6 +89,9 @@ For example, the [Receipt Repository](receipt_extractor/core/receipt.py#L112) in
 while the implementation that uses AWS DynamoDB for the ReceiptRepository is defined in
 the [dynamodb](receipt_extractor/dynamodb) package.
 
+Additionally, the AWS Lambda entrypoints are all implemented in the root of the `receipt_extractor/` directory. These
+files import all required libraries and packages to process individual lambda functions.
+
 ## System Design
 
 Below is a high level diagram of the system design of the receipt extractor. We will dive into the individual components
