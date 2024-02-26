@@ -8,7 +8,7 @@ during training.
 
 ## Solution
 
-In order to maintain model state during training, I would proposed that we
+In order to maintain model state during training, I would propose that we
 leverage [AWS Step Functions](https://aws.amazon.com/step-functions/) to orchestrate the training workflow via AWS ECS (
 using [GPUs on AWS ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-gpu.html) if necessary). The
 high level workflow of the training job would follow the below steps.

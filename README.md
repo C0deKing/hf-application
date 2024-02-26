@@ -1,4 +1,4 @@
-# hf-application
+# Matthew Alvarez - HuggingFace Application
 
 Hello! I'm excited to apply for the Huggingface Cloud ML Engineer role. This repository is the result of my work on the
 take home assignment. I have documented any implementations in the problem directories in this repository. The general
