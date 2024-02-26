@@ -42,13 +42,18 @@ To install all dependencies for this project, simply run the following
 poetry install
 ```
 
-This will load all python packages into your virtual environment
+This will load all python packages into your virtual environment.
+
+#### Running Tests
+
+Some minimal tests have been specified to demonstrate how unit and integration tests should be built using this pattern.
+All tests are specified in the [tests](tests) folder. In order to execute the test suite, simply run `poetry run pytest`
 
 #### Infrastructure Setup - Deployment
 
 In order to deploy the `Receipt Extractor` application, you will need to deploy the terraform application to your AWS
-environment. All of the infrastructure for this proejct is specified in the [infrastructure](infrastructure/) folder. By
-default this project is configured to deploy in the `us-east-2` region and set up 3 private/public subnets in a VPC. In
+environment. All the infrastructure for this project is specified in the [infrastructure](infrastructure/) folder. By
+default, this project is configured to deploy in the `us-east-2` region and set up 3 private/public subnets in a VPC. In
 order to change these settings, please see the [terraform.tfvars](infrastructure/terraform.tfvars) file.
 
 In order to deploy the terraform infrastructure, run the following commands
@@ -84,7 +89,8 @@ this [Sample Notebook](notebooks/api_example.ipynb) to invoke the API for testin
 
 This project leverages a [Hexagonal Architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) in
 Python. This means that common dataclasses and interfaces are defined in the [core](receipt_extractor/core/) python
-package, while specific implementations are leveraged in other python packages.
+package, while specific implementations that use other libraries are declared in other python packages within the
+project.
 
 For example, the [Receipt Repository](receipt_extractor/core/receipt.py#L112) interface is defined in the core package,
 while the implementation that uses AWS DynamoDB for the ReceiptRepository is defined in
