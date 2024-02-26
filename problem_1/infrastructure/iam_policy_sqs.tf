@@ -1,6 +1,6 @@
-resource "aws_iam_policy" "dead_letter_sns_policy" {
+resource "aws_iam_policy" "dead_letter_sqs_policy" {
 
-  name        = "${var.environment}-dead-letter-sns-policy"
+  name        = "${var.environment}-dead-letter-sqs-policy"
   path        = "/"
   description = "AWS IAM Policy for the receipt extraction dead letter processor"
   policy      = <<EOF

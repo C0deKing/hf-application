@@ -34,6 +34,17 @@ resource "aws_iam_policy" "application_iam_policy" {
      ],
      "Resource": "${aws_s3_bucket.receipt_data.arn}/*",
      "Effect": "Allow"
+   },
+   {
+     "Action": [
+        "ec2:CreateNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DeleteNetworkInterface",
+        "ec2:AssignPrivateIpAddresses",
+        "ec2:UnassignPrivateIpAddresses"
+     ],
+     "Resource": "*",
+     "Effect": "Allow"
    }
  ]
 }

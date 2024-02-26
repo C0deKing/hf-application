@@ -8,7 +8,7 @@ resource "aws_lambda_function" "dead_letters" {
     null_resource.docker_packaging
   ]
   image_config {
-    command = ["receipt_extractor.sns_handler.process_error"]
+    command = ["receipt_extractor.sqs_handler.process_error"]
   }
   environment {
     variables = {

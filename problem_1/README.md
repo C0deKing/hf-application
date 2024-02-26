@@ -185,15 +185,24 @@ or [GPUs on ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs
 using specialized hardware (e.g. Nvidia GPUs or XLA devices such
 as [AWS Inferentia](https://aws.amazon.com/machine-learning/inferentia/))
 
-### Dead Letter SNS Topic
+### Dead Letter SQS Queue
 
 If a failure were to occur when processing data from any of
 the [AWS Kinesis Streams](infrastructure/kinesis_streams.tf), the AWS Lambda Dead Letter integration will deliver a
-message to the [Dead Letter SNS Topic](infrastructure/sqs_dead_letters.tf) configured for this project.
+message to the [Dead Letter SQS Queue](infrastructure/sqs_dead_letters.tf) configured for this project.
 
 #### Dead Letter Lambda
 
-When messages are delivered to the [Dead Letter SNS Topic](infrastructure/sqs_dead_letters.tf)
+When messages are delivered to the [Dead Letter SQS Queue](infrastructure/sqs_dead_letters.tf)
 the [Dead Letter Lambda Function](infrastructure/lambda_dead_letters.tf) will update the status of the receipt record in
 DynamoDB to reflect an errored state. This enables consumers of this system to add application specific logic around
-failed interactions with the receipt data processing system. 
+failed interactions with the receipt data processing system.
+
+### Networking
+
+While this is not a major component of this project, it is important to note that there is a terraform module in the
+infrastructure folder dedicated to networking. This submodule creates a dedicated VPC and public/private subnets. While
+this is not always the first thought when designing scalable systems, it is important to create isolated networks with
+reserved IP spaces as systems grow. So this submodule is meant to set up the project for future success in the realm of
+VPC best practices. If we had to migrate the project to use GPUs in SageMaker or AWS ECS, the project should use this
+private VPC and subnets for those resources. 
