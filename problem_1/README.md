@@ -21,6 +21,7 @@ In order to get started working with this repository you must first install the 
 follow the [instructions](#getting-started---instructions) section of this document
 
 ***Tools***
+Please make sure you have the following installed on your machine to get started.
 
 - Python - Have a python environment activated using python 3.9
 - [Poetry](https://python-poetry.org/) - Used for managing python packages and environments
