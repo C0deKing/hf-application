@@ -22,6 +22,6 @@ resource "aws_lambda_function" "dead_letters" {
 resource "aws_lambda_event_source_mapping" "dead_letters" {
   event_source_arn                   = aws_sqs_queue.dead_letters.arn
   function_name                      = aws_lambda_function.dead_letters.arn
-  batch_size                         = 10
+  batch_size                         = 1
   maximum_batching_window_in_seconds = 5
 }

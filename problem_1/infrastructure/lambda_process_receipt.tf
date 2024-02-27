@@ -22,14 +22,19 @@ resource "aws_lambda_function" "process_receipt" {
       "S3_BUCKET_NAME" : aws_s3_bucket.receipt_data.id
     }
   }
-  dead_letter_config {
-    target_arn = aws_sqs_queue.dead_letters.arn
-  }
 }
 
 resource "aws_lambda_event_source_mapping" "process_receipt" {
-  event_source_arn  = aws_kinesis_stream.process_receipt_stream.arn
-  function_name     = aws_lambda_function.process_receipt.arn
-  batch_size        = 1
-  starting_position = "LATEST"
+  event_source_arn              = aws_kinesis_stream.process_receipt_stream.arn
+  function_name                 = aws_lambda_function.process_receipt.arn
+  batch_size                    = 1
+  starting_position             = "TRIM_HORIZON"
+  maximum_retry_attempts        = 1
+  maximum_record_age_in_seconds = 360
+
+  destination_config {
+    on_failure {
+      destination_arn = aws_sqs_queue.dead_letters.arn
+    }
+  }
 }

@@ -69,8 +69,18 @@ class TransformersReceiptExtractionService(ReceiptExtractionService):
         sequence = re.sub(r"<.*?>", "", sequence, count=1).strip()
         return self.processor.token2json(sequence)
 
+    def _update_status(self, receipt: Receipt, status: ReceiptStatus) -> Receipt:
+        receipt = receipt.model_copy(
+            update={
+                'status': status
+            }
+        )
+        self._receipt_repository.save(receipt)
+        return receipt
+
     def extract_data(self, receipts: List[Receipt]) -> List[Receipt]:
-        receipts = [receipt for receipt in receipts if receipt.file_path is not None]
+        receipts = [self._update_status(receipt, ReceiptStatus.EXTRACTING) for receipt in receipts if
+                    receipt.file_path is not None]
         files = [self._receipt_file(receipt) for receipt in receipts if receipt.file_path]
         images = [Image.open(file) for file in files]
         pixel_values = self.processor(images, return_tensors="pt").pixel_values
@@ -96,6 +106,7 @@ class TransformersReceiptExtractionService(ReceiptExtractionService):
             _parse_output(data)
             for data in output
         ]
+
         updated_receipts = [
             receipt.model_copy(
                 update={

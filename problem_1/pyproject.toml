@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "receipt-extractor"
-version = "0.3.19"
+version = "1.0.1"
 description = ""
 authors = ["Matthew Alvarez <matt@mattjalvarez.com>"]
 readme = "README.md"

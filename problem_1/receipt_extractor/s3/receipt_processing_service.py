@@ -32,7 +32,7 @@ class S3ReceiptProcessingService(ReceiptProcessingService):
 
         download_image_request = requests.get(receipt.image_url)
         if download_image_request.status_code != 200:
-            pass
+            raise ValueError(f"Cannot download file {receipt}")
 
         image_content = download_image_request.content
         image_extension = receipt.image_url.path.split('.')[-1]

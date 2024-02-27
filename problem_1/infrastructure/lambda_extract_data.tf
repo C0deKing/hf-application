@@ -27,9 +27,6 @@ resource "aws_lambda_function" "extract_data" {
       "HF_HOME" : "/tmp/hf-home/"
     }
   }
-  dead_letter_config {
-    target_arn = aws_sqs_queue.dead_letters.arn
-  }
 }
 
 resource "aws_lambda_event_source_mapping" "extract_data" {
@@ -38,4 +35,13 @@ resource "aws_lambda_event_source_mapping" "extract_data" {
   batch_size                         = 4
   maximum_batching_window_in_seconds = 5
   starting_position                  = "LATEST"
+  maximum_retry_attempts             = 2
+  maximum_record_age_in_seconds      = 3600
+  bisect_batch_on_function_error     = true
+
+  destination_config {
+    on_failure {
+      destination_arn = aws_sqs_queue.dead_letters.arn
+    }
+  }
 }

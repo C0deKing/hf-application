@@ -19,12 +19,10 @@ def dynamo_client():
     dynamo_client.create_table(
         TableName='receipt-extractor_receipts',
         KeySchema=[
-            {"AttributeName": "partition_key", "KeyType": "HASH"},  # Partition key
-            {"AttributeName": "sort_key", "KeyType": "RANGE"},  # Sort key
+            {"AttributeName": "request_id", "KeyType": "HASH"}  # Partition key
         ],
         AttributeDefinitions=[
-            {"AttributeName": "partition_key", "AttributeType": "S"},  # Partition key
-            {"AttributeName": "sort_key", "AttributeType": "S"},  # Sort key
+            {"AttributeName": "request_id", "AttributeType": "S"}  # Partition key
         ],
         ProvisionedThroughput={
             "ReadCapacityUnits": 10,

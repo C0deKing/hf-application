@@ -1,19 +1,12 @@
 resource "aws_dynamodb_table" "receipt-data" {
   name         = "${var.environment}_receipt-data"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "partition_key"
-  range_key    = "sort_key"
+  hash_key     = "request_id"
 
   attribute {
-    name = "partition_key"
+    name = "request_id"
     type = "S"
   }
-
-  attribute {
-    name = "sort_key"
-    type = "S"
-  }
-
 
 
   ttl {

@@ -23,8 +23,7 @@ class DynamoReceiptRepository(ReceiptRepository):
         receipt_item = self._client.get_item(
             TableName=self._table_name,
             Key={
-                'partition_key': {'S': f'receipt#{receipt_id}'},
-                'sort_key': {'S': f'receipt#{receipt_id}'}
+                'request_id': {'S': str(receipt_id)}
             }
         )['Item']
         receipt_data = None
@@ -43,8 +42,6 @@ class DynamoReceiptRepository(ReceiptRepository):
     def save(self, receipt: Receipt) -> None:
         expiration_date = datetime.now(tz=timezone.utc) + timedelta(days=self._retention_period_days)
         receipt_item = {
-            'partition_key': {'S': f'receipt#{receipt.request_id}'},
-            'sort_key': {'S': f'receipt#{receipt.request_id}'},
             'application_id': {'S': str(receipt.application_id)},
             'request_id': {'S': str(receipt.request_id)},
             'status': {'S': receipt.status.value},
